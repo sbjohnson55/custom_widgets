@@ -1,0 +1,123 @@
+{
+	"id": "com.sap.sample.editProperties",
+	"version": "1.0.2",
+	"name": "Property Editor",
+	"description": "Sample Table that allows users to edit Dimension Properties",
+	"newInstancePrefix": "PropertyTable",
+	"vendor": "SAP",
+	"eula": "",
+	"license": "",
+	"imports": ["planning-model"],
+	"webcomponents": [
+		{
+			"kind": "main",
+			"tag": "com-sap-sample-editproperties",
+			"url": "https://hanawritebackd1846f6fd.us2.hana.ondemand.com/hana_writeback/customWidgets/editableTable/editProperties.js",
+			"integrity": "",
+			"ignoreIntegrity": true
+		}
+	],
+	"properties": {
+		"fontSize": {
+			"type": "number",
+			"description": "Font size in px",
+			"default": 18
+		},
+		"headerBackgroundColor": {
+			"type": "string",
+			"description": "Header Background color in Hex, RGB or Name",
+			"default": "#3498db"
+		},
+		"headerFontColor": {
+			"type": "string",
+			"description": "Header Font color in Hex, RGB or Name",
+			"default": "white"
+		},
+		"oddRowBackgroundColor": {
+			"type": "string",
+			"description": "Background color for all ODD numbered rows in Hex, RGB or Name",
+			"default": "#eee"
+		},
+		"hoverColor": {
+			"type": "string",
+			"description": "Background color when users hover over rows in Hex, RGB or Name",
+			"default": "coral"
+		}
+	},
+	"methods": {
+		"loadDimensions": {
+			"description": "Loads Dimensions and Properties into Table",
+			"parameters": [
+				  {
+					"name": "data",
+					"type": "any",
+					"description": "PlanningMemberInfo for Dimensions"
+				} ]
+		  
+			  },
+		"getData": {
+			"returnType": "PlanningModelMember[]",
+			"description": "Retrieves updated Data"
+		},
+		"setHeaderBackgroundColor": {
+			"description": "Sets the background color for the table header.",
+			"parameters": [
+				{
+					"name": "newColor",
+					"type": "string",
+					"description": "The new color"
+				}
+			],
+			"body": "this.headerBackgroundColor = newColor;"
+		},
+		"setFontSize": {
+			"description": "Sets the font size in px for the Table.",
+			"parameters": [
+				{
+					"name": "newSize",
+					"type": "number",
+					"description": "The new color"
+				}
+			],
+			"body": "this.fontSize = newSize;"
+		},
+		"setHeaderFontColor": {
+			"description": "Sets the font color for the table header.",
+			"parameters": [
+				{
+					"name": "newColor",
+					"type": "string",
+					"description": "The new color"
+				}
+			],
+			"body": "this.headerFontColor = newColor;"
+		},
+		"setHoverColor": {
+			"description": "Sets the background color when end users hover over rows.",
+			"parameters": [
+				{
+					"name": "newColor",
+					"type": "string",
+					"description": "The new color"
+				}
+			],
+			"body": "this.hoverColor = newColor;"
+		},
+		"setOddRowBackgroundColor": {
+			"description": "Sets the background color for odd numbered rows.",
+			"parameters": [
+				{
+					"name": "newColor",
+					"type": "string",
+					"description": "The new color"
+				}
+			],
+			"body": "this.oddRowBackgroundColor = newColor;"
+		}
+	},
+	"events": {
+		"onCommitChanges": {
+			"description": "Called when the user commits the changes."
+		}
+	}
+}

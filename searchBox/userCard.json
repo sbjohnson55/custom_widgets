@@ -1,0 +1,104 @@
+{
+    "eula": "",
+    "vendor": "SAP",
+    "license": "",
+    "id": "com.sap.sample.usercard",
+    "version": "1.0.0",
+    "name": "User Card",
+    "newInstancePrefix": "UserCard",
+    "description": "A sample widget to provide a search box",
+    "imports": ["table", "input-controls","resultset"],
+    "webcomponents": [
+      {
+        "kind": "main",
+        "tag": "user-card",
+        "url": "http://localhost:3000/echarts/prepared/searchBox/userCard.js",
+        "integrity": "",
+        "ignoreIntegrity": true
+      }
+    ],
+    "properties": {
+          "name": {
+              "type": "string",
+              "description":"name of user",
+              "default": ""
+          },
+          "avatar": {
+            "type": "string",
+            "description":"URL to image",
+            "default": ""
+          },
+          "email": {
+            "type": "string",
+            "description":"email address",
+            "default": ""
+          },
+          "phone": {
+            "type": "string",
+            "description":"phone number",
+            "default": ""
+          }    
+        
+    },
+    "methods": {
+      "setName": {
+        "description": "Sets the user's name.",
+        "parameters": [
+          {
+            "name": "newName",
+            "type": "string",
+            "description": "The user name"
+          }
+        ]
+        },
+      "getName": {
+        "returnType": "string",
+        "description": "Returns the background color."
+      },
+      "setAvatar": {
+        "description": "Sets the url to avatar img.",
+        "parameters": [
+          {
+            "name": "url",
+            "type": "string",
+            "description": "url to image"
+          }
+        ]
+        },
+      "getAvatar": {
+        "returnType": "string",
+        "description": "Returns the url to the image."
+      },
+      "setEmail": {
+        "description": "Sets the user's email address.",
+        "parameters": [
+          {
+            "name": "email",
+            "type": "string",
+            "description": "email"
+          }
+        ]
+        },
+      "getEmail": {
+        "returnType": "string",
+        "description": "Returns the user's email address."
+      },
+      "setPhone": {
+        "description": "Sets the user's phone.",
+        "parameters": [
+          {
+            "name": "phone",
+            "type": "string",
+            "description": "phone number"
+          }
+        ]
+        },
+      "getPhone": {
+        "returnType": "string",
+        "description": "Returns the phone."
+      }
+         
+    },
+    "events": {
+    }
+  }

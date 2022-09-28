@@ -1,0 +1,213 @@
+{
+    "eula": "",
+    "vendor": "SAP",
+    "license": "",
+    "id": "com.sap.sample.project",
+    "version": "1.0.0",
+    "name": "Project Charts",
+    "newInstancePrefix": "ProjectCharts",
+    "description": "A sample widget which displays Timeline and Gantt charts",
+    "webcomponents": [
+      {
+        "kind": "main",
+        "tag": "com-sap-sample-project",
+        "url": "https://hanawritebackd1846f6fd.us2.hana.ondemand.com/hana_writeback/customWidgets/projectCharts/projectCharts.js",
+        "integrity": "",
+        "ignoreIntegrity": true
+      }
+    ],
+    "types":{
+      "ProjectData":{
+        "description":"Holds the project details",
+        "properties":[
+          {
+            "name":"projectID",
+            "description":"ID of Project",
+            "type":"string",
+            "mandatory":true
+          },
+          {
+            "name":"projectName",
+            "description":"Name of Project",
+            "type":"string",
+            "mandatory":true
+          },
+          {
+            "name":"projectStartDate",
+            "description":"Start Date of Project",
+            "type":"string",
+            "mandatory":false
+          },
+          {
+            "name":"projectEndDate",
+            "description":"End Date of Project",
+            "type":"string",
+            "mandatory":false
+          },
+          {
+            "name":"projectDuration",
+            "description":"Duration of entire project in # of days",
+            "type":"string",
+            "mandatory":false
+          },
+          {
+            "name":"projectPercentComplete",
+            "description":"Shows % completed for entire project (used for Gantt only)",
+            "type":"string",
+            "mandatory":false
+          },
+          {
+            "name":"tasks",
+            "description":"End Date of Project",
+            "type":"TaskData[]",
+            "mandatory":true
+          }
+        ]
+      },
+      "TaskData":{
+          "description":"Holds the task details",
+          "properties":[
+            {
+              "name":"taskID",
+              "description":"ID of task",
+              "type":"string",
+              "mandatory":true
+            },
+            {
+              "name":"taskName",
+              "description":"Name of task",
+              "type":"string",
+              "mandatory":true
+            },
+            {
+              "name":"groupName",
+              "description":"Name of task group (used for Gantt only)",
+              "type":"string",
+              "mandatory":false
+            },
+            {
+              "name":"startDate",
+              "description":"Start Date of task",
+              "type":"string",
+              "mandatory":false
+            },
+            {
+            "name":"endDate",
+            "description":"End Date of task",
+            "type":"string",
+            "mandatory":false
+            },
+            {
+              "name":"duration",
+              "description":"Duration in # of days",
+              "type":"string",
+              "mandatory":false
+            },
+            {
+              "name":"percentComplete",
+              "description":"Shows % completed (used for Gantt only)",
+              "type":"string",
+              "mandatory":false
+            },
+            {
+              "name":"dependency",
+              "description":"Holds the ID of the task this task is dependent on (used for Gantt only)",
+              "type":"string",
+              "mandatory":false
+            }
+          ]
+      }
+  },
+    "properties": {
+          "width": {
+              "type": "integer",
+              "default": 100
+          },
+          "height": {
+              "type": "integer",
+              "default": 420
+          }        
+        
+    },
+    "methods": {
+      "showTimeline": {
+        "description": "Displays the Timeline",
+        "parameters": [
+              {
+                "name": "projects",
+                "type": "ProjectData[]",
+                "description": "array of Projects"
+            }
+        ]
+      },
+      "showTimelineByStartDate": {
+        "description": "Displays the Timeline using only Start Dates and the Project End Date",
+        "parameters": [
+              {
+                "name": "projects",
+                "type": "ProjectData[]",
+                "description": "array of Projects"
+            }
+        ]
+      },
+      "showTimelineByDuration": {
+        "description": "Displays the Timeline using only Start Dates and Duration value",
+        "parameters": [
+              {
+                "name": "projects",
+                "type": "ProjectData[]",
+                "description": "array of Projects"
+            }
+        ]
+      },
+      "showGanttChart": {
+        "description": "Displays the Timeline using only Start Dates and Duration value",
+        "parameters": [
+              {
+                "name": "project",
+                "type": "ProjectData",
+                "description": "ProjectData object to display in the Gantt"
+            },
+            {
+                "name": "showParentProject",
+                "type": "boolean",
+                "description": "indicate whether you wish to display the Parent Project or not"
+            },
+            {
+              "name": "showPercentComplete",
+              "type": "boolean",
+              "description": "indicate whether you wish to display the Percent Complete or not"
+          }
+        ]
+      },
+ 
+      "getEmptyProjectObject": {
+        "returnType": "ProjectData",
+			  "description": "Returns an empty ProjectData object"
+      },
+      "getEmptyTaskObject": {
+        "returnType": "TaskData",
+			  "description": "Returns an empty TaskData object"
+      },
+      "getEmptyProjectsArray": {
+        "returnType": "ProjectData[]",
+			  "description": "Returns an empty array to hold your ProjectData objects"
+      },
+      "getSelectedData": {
+        "returnType": "ProjectData",
+			  "description": "Returns the selected Data as a ProjectData object"
+      },
+      "resize": {
+			  "description": "Resizes the visualization"
+      }             
+    },
+    "events": {
+      "onClick": {
+        "description": "Called when the user clicks the timeline."
+      },
+      "onMouseOver": {
+        "description": "Called when the user hovers over a timeline.."
+      }
+    }
+    
+  }

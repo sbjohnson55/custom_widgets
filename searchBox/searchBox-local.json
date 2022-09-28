@@ -1,0 +1,105 @@
+{
+    "eula": "",
+    "vendor": "SAP",
+    "license": "",
+    "id": "com.sap.sample.searchbox",
+    "version": "1.0.0",
+    "name": "Search Box",
+    "newInstancePrefix": "SearchBox",
+    "description": "A sample widget to provide a search box",
+    "imports": ["table", "input-controls","datasource"],
+    "webcomponents": [
+      {
+        "kind": "main",
+        "tag": "com-sap-sample-searchbox",
+        "url": "http://localhost:5500/searchBox/searchBox.js",
+        "integrity": "",
+        "ignoreIntegrity": true
+      },
+      {
+        "kind": "builder",
+        "tag": "com-sap-sample-searchbox-builder",
+        "url": "http://localhost:5500/searchBox/searchBox_builder.js",
+        "integrity": "",
+        "ignoreIntegrity": true
+      }
+    ],
+    "properties": {
+        "displayType":{
+          "type": "string",
+          "description": "Display Type",
+          "default": "description"
+        }
+        
+    },
+    "methods": {
+      "getSelectedMember": {
+        "returnType": "MemberInfo",
+        "description": "Returns the selected value as a MemberInfo."
+      },
+      "populateSearchBox": {
+        "description": "Sends List of Dimension Members to populate Search Box",
+        "parameters": [
+              {
+                "name": "members",
+                "type": "MemberInfo[]",
+                "description": "MemberInfo array"
+              }
+        ]
+      },
+
+      "setEnabled": {
+        "parameters": [{"name": "enabled", "type": "boolean"}],
+        "description": "Sets the widget to be enabled or disabled"
+      },
+      "isEnabled": {
+        "returnType": "boolean"
+      },
+      "setFontSize": {
+        "parameters": [{"name": "newFontSize", "type": "string"}],
+        "description": "Sets the Font Size"
+      },
+      "setFontFamily": {
+        "parameters": [{"name": "newFontFamily", "type": "string"}],
+        "description": "Sets the Font Family"
+      },
+      "setFontColor": {
+        "parameters": [{"name": "newFontColor", "type": "string"}],
+        "description": "Sets the Font Color"
+      },
+      "setTopPadding": {
+        "parameters": [{"name": "newPadding", "type": "string"}],
+        "description": "Sets the Top Padding"
+      },
+      "setBottomPadding": {
+        "parameters": [{"name": "newPadding", "type": "string"}],
+        "description": "Sets the Bottom Padding"
+      },
+      "setLeftPadding": {
+        "parameters": [{"name": "newPadding", "type": "string"}],
+        "description": "Sets the Left Padding"
+      },
+      "setRightPadding": {
+        "parameters": [{"name": "newPadding", "type": "string"}],
+        "description": "Sets the Right Padding"
+      },
+      "getTopPadding": {
+        "returnType": "string"
+      },
+      "getBottomPadding": {
+        "returnType": "string"
+      },
+      "getLeftPadding": {
+        "returnType": "string"
+      },
+      "getRightPadding": {
+        "returnType": "string"
+      }
+       
+    },
+    "events": {
+      "onMemberSelected": {
+        "description": "Called when the user has selected a member from the list box."
+      }
+    }
+  }

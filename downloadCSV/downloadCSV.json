@@ -1,0 +1,32 @@
+{
+    "eula": "",
+    "vendor": "SAP",
+    "license": "",
+    "id": "com.sap.sample.createcsv",
+    "version": "1.0.0",
+    "name": "Create CSV",
+    "newInstancePrefix": "CreateCSV",
+    "description": "A sample widget that allows users to upload a file",
+    "imports": ["table","datasource"],
+    "webcomponents": [
+      {
+        "kind": "main",
+        "tag": "com-sap-sample-createcsv",
+        "url": "http://127.0.0.1:5500/downloadCSV/downloadCSV.js",
+        "integrity": "",
+        "ignoreIntegrity": true
+      }
+    ],
+    "properties": {  
+    },
+    "methods": {
+      "downloadCSV": {
+        "parameters": [
+          {"name": "table", "type": "Table"},
+          {"name": "fileName", "type": "string"}
+        ]
+      }      
+    },
+    "events": {
+    }
+  }

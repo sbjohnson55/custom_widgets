@@ -1,0 +1,190 @@
+<! DOCTYPE html>  
+<html>  
+<head>  
+<meta name="viewport" content="width=device-width, initial-scale=1">  
+<meta charset="UTF-8">  
+<title> JavaScript editable table </title>  
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">  
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">  
+</head>  
+<style>  
+ @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500');  
+body {  
+  font-family: 'Montserrat', sans-serif;  
+  padding: 0;  
+  margin: 0;  
+  text-align: center;  
+}  
+h1 {  
+  position: relative;  
+  padding: 0;  
+  margin: 10;  
+  font-family: "Raleway", sans-serif;  
+  font-weight: 300;  
+  font-size: 40px;  
+  color: #080808;  
+  -webkit-transition: all 0.4s ease 0s;  
+  -o-transition: all 0.4s ease 0s;  
+  transition: all 0.4s ease 0s;   
+}  
+tr:nth-of-type(odd) {   
+    background: #eee;   
+    }  
+    th {   
+    background: #3498db;   
+    color: white;   
+    font-weight: bold;   
+    }  
+  
+@import "compass/css3";  
+.table-editable {  
+  position: relative;  
+  .glyphicon {  
+    font-size: 20px;  
+  }  
+}  
+table {   
+    width: 750px;   
+    border-collapse: collapse;   
+    margin:50px auto;  
+    }  
+    td, th {   
+    padding: 10px;   
+    border: 1px solid #ccc;   
+    text-align: left;   
+    font-size: 18px;  
+    }  
+.table-remove {  
+  color: #700;  
+  cursor: pointer;  
+  &:hover {  
+    color: #f00;  
+  }  
+}  
+.table-up {  
+  color: #007;  
+  cursor: pointer;  
+  &:hover {  
+    color: #00f;  
+  }  
+}  
+.table-down {  
+  color: #007;  
+  cursor: pointer;  
+  &:hover {  
+    color: #00f;  
+  }  
+}  
+.table-add {  
+  color: #070;  
+  cursor: pointer;  
+  position: absolute;  
+  top: 8px;  
+  right: 0;  
+  &:hover {  
+    color: #0b0;  
+  }  
+}  
+</style>  
+<body>  
+<div class="container">  
+  <h1> JavaScript Editable Table </h1>  
+  <div id="table" class="table-editable">  
+    <table class="table">  
+      <tr>  
+        <th> Name</th>  
+        <th> Roll No </th>  
+        <th> Class </th>  
+        <th> Marks </th>  
+      </tr>  
+      <tr>  
+        <td> Ram </td>  
+        <td> <input value="2022-09-23" type="date" id="datemax" name="datemax" max="2024-12-31" style="font-size: 1em" ></td>  
+        <td> <input defaultvalue="09/23/2022" type="text"> </td>  
+    <td> <input type="date" value="1980-08-26"> </td>  
+      </tr>  
+<tr>  
+        <td onchange="onChange()"> Rama </td>  
+        <td> 10 </td>  
+       <td> BSC </td>  
+  <td> 40 </td>  
+      </tr>  
+        <tr>  
+        <td> sham </td>  
+        <td> 8 </td>  
+       <td> BCA </td>  
+      <td> 34 </td>  
+      </tr>  
+    <tr>  
+        <td> shama </td>  
+        <td> 3 </td>  
+    <td> BCA </td>  
+    <td> 30 </td>  
+      </tr>  
+    </table>  
+  </div>  
+</div>  
+<script>
+
+const cells = document.querySelectorAll("td");
+	cells.forEach(cell => {
+    cell.setAttribute("contenteditable","true");
+    /*
+    console.log('cell: ', cell);
+	  cell.addEventListener('mousedown', onMouseDown(cell));  
+    cell.addEventListener('input', onChange(cell)); 
+    cell.addEventListener('*', handleEvent);
+    */
+    addEventListenerAll(
+      cell,
+      (evt) => { console.log(evt.type); },
+      true
+    );
+});
+
+function onMouseDown(cell){
+  cell.setAttribute("contenteditable","true");
+  
+}
+
+function handleEvent(event) {
+    console.log(`${event.type}: ${event.data}`);
+}
+
+function onChange(cell){
+  console.log(cell);
+}
+
+
+function addEventListenerAll(target, listener, ...otherArguments) {
+
+// install listeners for all natively triggered events
+for (const key in target) {
+    if (/^on/.test(key)) {
+        const eventType = key.substr(2);
+        target.addEventListener(eventType, listener, ...otherArguments);
+    }
+}
+
+// dynamically install listeners for all manually triggered events, just-in-time before they're dispatched ;D
+const dispatchEvent_original = EventTarget.prototype.dispatchEvent;
+function dispatchEvent(event) {
+    target.addEventListener(event.type, listener, ...otherArguments);  // multiple identical listeners are automatically discarded
+    dispatchEvent_original.apply(this, arguments);
+}
+EventTarget.prototype.dispatchEvent = dispatchEvent;
+if (EventTarget.prototype.dispatchEvent !== dispatchEvent) throw new Error(`Browser is smarter than you think!`);
+
+}
+
+/*
+addEventListenerAll(
+window,
+(evt) => { console.log(evt.type); },
+true
+);
+document.body.dispatchEvent(new Event('omfggg!', { bubbles: false }));
+*/
+</script>
+</body>  
+</html>  
