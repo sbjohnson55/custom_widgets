@@ -11,7 +11,7 @@
       {
         "kind": "main",
         "tag": "com-sap-sample-project",
-        "url": "https://hanawritebackd1846f6fd.us2.hana.ondemand.com/hana_writeback/customWidgets/projectCharts/projectCharts.js",
+        "url": "https://cdn.jsdelivr.net/gh/sbjohnson55/custom_widgets/projectCharts/projectCharts.min.js",
         "integrity": "",
         "ignoreIntegrity": true
       }
