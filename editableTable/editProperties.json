@@ -12,7 +12,7 @@
 		{
 			"kind": "main",
 			"tag": "com-sap-sample-editproperties",
-			"url": "https://cdn.jsdelivr.net/gh/sbjohnson55/custom_widgets/editableTable/editProperties.js",
+			"url": "https://cdn.jsdelivr.net/gh/sbjohnson55/custom_widgets/editableTable/editProperties.min.js",
 			"integrity": "",
 			"ignoreIntegrity": true
 		}
