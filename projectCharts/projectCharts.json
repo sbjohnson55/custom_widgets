@@ -7,6 +7,7 @@
     "name": "Project Charts - Test",
     "newInstancePrefix": "ProjectCharts",
     "description": "A sample widget which displays Timeline and Gantt charts",
+    "imports": ["table","datasource"],
     "webcomponents": [
       {
         "kind": "main",

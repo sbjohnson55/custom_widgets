@@ -22,7 +22,7 @@
 		  }
 
 		handleButtonClick(){
-
+			console.log("Button clicked");
 		}
 		_submit(e) {
 			e.preventDefault();
