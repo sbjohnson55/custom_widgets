@@ -1,18 +1,6 @@
 (function()  {
 	let template = document.createElement("template");
 	template.innerHTML = `
-		<form id="form">
-			<fieldset>
-				<legend>Colored Box Properties</legend>
-				<table>
-					<tr>
-						<td>Opacity</td>
-						<td><input id="builder_opacity" type="text" size="5" maxlength="5"></td>
-					</tr>
-				</table>
-				<input type="submit" style="display:none;">
-			</fieldset>
-		</form>
 		<button type="button" id="sampleButton">Click Me!</button>
 		<style>
 		:host {
@@ -27,20 +15,14 @@
 			super();
 			this._shadowRoot = this.attachShadow({mode: "open"});
 			this._shadowRoot.appendChild(template.content.cloneNode(true));
-			this._shadowRoot.getElementById("form").addEventListener("submit", this._submit.bind(this));
 			this._shadowRoot.getElementById("sampleButton").addEventListener("click", this.handleButtonClick());
 		}
 		onCustomWidgetAfterUpdate(changedProperties) {
-			this._table_div.style.display = "table";
-			/*
-			this._table_div.style.width="100px";
-			this._table_div.style.height="100px";
-			this._table_div.style.overflow="auto";
-			*/
+
 		  }
 
 		handleButtonClick(){
-			
+
 		}
 		_submit(e) {
 			e.preventDefault();
