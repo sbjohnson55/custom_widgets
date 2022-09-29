@@ -18,8 +18,8 @@
 			this._button = this._shadowRoot.getElementById("sampleButton");
 		}
 		onCustomWidgetAfterUpdate(changedProperties) {
-
-		  }
+			console.log("Now");
+		}
 
 		handleButtonClick(){
 			console.log("Button clicked");
