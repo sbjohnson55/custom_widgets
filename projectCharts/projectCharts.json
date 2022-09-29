@@ -2,9 +2,9 @@
     "eula": "",
     "vendor": "SAP",
     "license": "",
-    "id": "com.sap.sample.project",
+    "id": "com.sap.sample.project.test",
     "version": "1.0.0",
-    "name": "Project Charts",
+    "name": "Project Charts - Test",
     "newInstancePrefix": "ProjectCharts",
     "description": "A sample widget which displays Timeline and Gantt charts",
     "webcomponents": [
