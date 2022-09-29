@@ -13,6 +13,7 @@
 				<input type="submit" style="display:none;">
 			</fieldset>
 		</form>
+		<button type="button" id="sampleButton">Click Me!</button>
 		<style>
 		:host {
 			display: block;
@@ -27,8 +28,20 @@
 			this._shadowRoot = this.attachShadow({mode: "open"});
 			this._shadowRoot.appendChild(template.content.cloneNode(true));
 			this._shadowRoot.getElementById("form").addEventListener("submit", this._submit.bind(this));
+			this._shadowRoot.getElementById("sampleButton").addEventListener("click", this.handleButtonClick());
 		}
+		onCustomWidgetAfterUpdate(changedProperties) {
+			this._table_div.style.display = "table";
+			/*
+			this._table_div.style.width="100px";
+			this._table_div.style.height="100px";
+			this._table_div.style.overflow="auto";
+			*/
+		  }
 
+		handleButtonClick(){
+			
+		}
 		_submit(e) {
 			e.preventDefault();
 			this.dispatchEvent(new CustomEvent("propertiesChanged", {

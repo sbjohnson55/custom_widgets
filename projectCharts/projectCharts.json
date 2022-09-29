@@ -215,6 +215,22 @@
       "onMouseOver": {
         "description": "Called when the user hovers over a timeline.."
       }
+    },
+    "dataBindings": {
+      "myDataBinding": {
+        "feeds": [
+          {
+            "id": "dimensions",
+            "description": "Dimensions",
+            "type": "dimension"
+          },
+          {
+            "id": "measures",
+            "description": "Measures",
+            "type": "mainStructureMember"
+          }
+        ]
+      }
     }
     
   }
