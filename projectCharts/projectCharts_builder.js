@@ -15,7 +15,7 @@
 			super();
 			this._shadowRoot = this.attachShadow({mode: "open"});
 			this._shadowRoot.appendChild(template.content.cloneNode(true));
-			this._shadowRoot.getElementById("sampleButton").addEventListener("click", this.handleButtonClick());
+			this._button = this._shadowRoot.getElementById("sampleButton");
 		}
 		onCustomWidgetAfterUpdate(changedProperties) {
 
@@ -41,6 +41,11 @@
 
 		get opacity() {
 			return this._shadowRoot.getElementById("builder_opacity").value;
+		}
+
+		connectedCallback(){
+			this._button.addEventListener('click',(e)=>this.handleButtonClick());
+		   
 		}
 	}
 
