@@ -23,6 +23,8 @@
 
 		handleButtonClick(){
 			console.log("Button clicked");
+			let table = new Table();
+			table.openSelectModelDialog();
 		}
 		_submit(e) {
 			e.preventDefault();

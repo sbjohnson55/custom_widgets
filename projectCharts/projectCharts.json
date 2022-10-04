@@ -15,13 +15,6 @@
         "url": "https://cdn.jsdelivr.net/gh/sbjohnson55/custom_widgets/projectCharts/projectCharts.min.js",
         "integrity": "",
         "ignoreIntegrity": true
-      },
-      {
-        "kind": "builder",
-        "tag": "com-sap-sample-project-builder",
-        "url": "https://cdn.jsdelivr.net/gh/sbjohnson55/custom_widgets/projectCharts/projectCharts_builder.js",
-        "integrity": "",
-        "ignoreIntegrity": true
       }
     ],
     "types":{
@@ -66,7 +59,7 @@
           },
           {
             "name":"tasks",
-            "description":"End Date of Project",
+            "description":"Array of tasks associated with the project",
             "type":"TaskData[]",
             "mandatory":true
           }
