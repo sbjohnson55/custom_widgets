@@ -166,7 +166,8 @@
           
         }
         loadDimensions(data){
-          console.log(data);
+          console.log(this.myDataBinding);
+          //console.log(data);
           for(var i=0;i<data.length;i++){
             var props = data[i].properties;
             if(i==0){

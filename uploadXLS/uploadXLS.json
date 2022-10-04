@@ -12,7 +12,7 @@
       {
         "kind": "main",
         "tag": "com-sap-sample-uploadxls",
-        "url": "https://hanawritebackd1846f6fd.us2.hana.ondemand.com/hana_writeback/customWidgets/uploadXLS/uploadXLS.js",
+        "url": "https://cdn.jsdelivr.net/gh/sbjohnson55/custom_widgets/uploadXLS/uploadXLS.min.js",
         "integrity": "",
         "ignoreIntegrity": true
       }
