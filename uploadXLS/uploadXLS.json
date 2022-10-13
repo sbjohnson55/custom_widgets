@@ -20,6 +20,11 @@
     "properties": {  
     },
     "methods": {
+      "downloadTemplate": {
+        "parameters": [
+          {"name": "fileName", "type": "string"}
+        ]
+      } ,
       "getData": {
         "returnType": "Selection[]",
         "description": "Returns the Data string.",

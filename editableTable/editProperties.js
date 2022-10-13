@@ -165,9 +165,8 @@
           
           
         }
+
         loadDimensions(data){
-          console.log(this.myDataBinding);
-          //console.log(data);
           for(var i=0;i<data.length;i++){
             var props = data[i].properties;
             if(i==0){
@@ -200,17 +199,14 @@
         onChange(e,cell){
             this._edit=true;
         }
-
         
         onBlur(e,cell){
             if(this._edit){
                 this._edit=false;
             }
             
-          }
+        }
 
-       
-       
         addEventListenerAll(target, listener, ...otherArguments) {
 
             // install listeners for all natively triggered events
@@ -225,7 +221,6 @@
         dispatch(event, arg) {
             this.dispatchEvent(new CustomEvent(event, {detail: arg}));
         }
-
 
         /**
          * standard Web Component function used to add event listeners

@@ -7,15 +7,22 @@
 	"vendor": "SAP",
 	"eula": "",
 	"license": "",
-	"imports": ["planning-model"],
+	"imports": ["planning-model","data-binding","datasource","table"],
 	"webcomponents": [
 		{
 			"kind": "main",
 			"tag": "com-sap-sample-editproperties",
-			"url": "https://cdn.jsdelivr.net/gh/sbjohnson55/custom_widgets/editableTable/editProperties.min.js",
+			"url": "http://127.0.0.1:5500/editableTable/editProperties.js",
 			"integrity": "",
 			"ignoreIntegrity": true
-		}
+		},
+		{
+			"kind": "builder",
+			"tag": "com-sap-sample-edit-properties-builder",
+			"url": "http://127.0.0.1:5500/editableTable/editProperties_builder.js",
+			"integrity": "",
+			"ignoreIntegrity": true
+		  }
 	],
 	"properties": {
 		"fontSize": {
@@ -59,6 +66,7 @@
 			"returnType": "PlanningModelMember[]",
 			"description": "Retrieves updated Data"
 		},
+
 		"setHeaderBackgroundColor": {
 			"description": "Sets the background color for the table header.",
 			"parameters": [
@@ -127,11 +135,6 @@
 			  "id": "dimensions",
 			  "description": "Dimensions",
 			  "type": "dimension"
-			},
-			{
-			  "id": "measures",
-			  "description": "Measures",
-			  "type": "mainStructureMember"
 			}
 		  ]
 		}
