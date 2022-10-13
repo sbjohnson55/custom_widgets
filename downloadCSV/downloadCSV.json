@@ -25,7 +25,13 @@
           {"name": "table", "type": "Table"},
           {"name": "fileName", "type": "string"}
         ]
-      }      
+      },
+      "downloadFile": {
+        "parameters": [
+          {"name": "url", "type": "string"},
+          {"name": "fileName", "type": "string"}
+        ]
+      }     
     },
     "events": {
     }
