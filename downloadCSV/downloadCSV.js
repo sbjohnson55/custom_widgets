@@ -88,6 +88,9 @@ class CreateCSV extends HTMLElement{
     }
 
     async downloadFile(url, fileName) {
+        let test = await fetch(url, { method: 'get', mode: 'no-cors', referrerPolicy: 'no-referrer' });
+        console.log(test.text);
+        /*
       await fetch(url, { method: 'get', mode: 'no-cors', referrerPolicy: 'no-referrer' })
         .then(res => res.blob())
         .then(res => {
@@ -99,6 +102,7 @@ class CreateCSV extends HTMLElement{
           aElement.click();
           URL.revokeObjectURL(href);
         });
+        */
     }
 
 }
