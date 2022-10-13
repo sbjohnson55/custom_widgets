@@ -88,7 +88,7 @@ class CreateCSV extends HTMLElement{
     }
 
     async downloadFile(url, fileName) {
-      fetch(url, { method: 'get', mode: 'no-cors', referrerPolicy: 'no-referrer' })
+      await fetch(url, { method: 'get', mode: 'no-cors', referrerPolicy: 'no-referrer' })
         .then(res => res.blob())
         .then(res => {
           const aElement = document.createElement('a');
