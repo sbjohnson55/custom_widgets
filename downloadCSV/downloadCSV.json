@@ -12,7 +12,7 @@
       {
         "kind": "main",
         "tag": "com-sap-sample-createcsv",
-        "url": "https://cdn.jsdelivr.net/gh/sbjohnson55/custom_widgets/downloadCSV/downloadCSV.js",
+        "url": "http://127.0.0.1:5500/downloadCSV/downloadCSV.js",
         "integrity": "",
         "ignoreIntegrity": true
       }
