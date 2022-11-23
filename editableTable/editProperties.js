@@ -165,7 +165,9 @@
           
           
         }
-
+        resetTable(){
+          this._table.innerHTML = "";
+        }
         loadDimensions(data){
           for(var i=0;i<data.length;i++){
             var props = data[i].properties;

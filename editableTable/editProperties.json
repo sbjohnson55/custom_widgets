@@ -7,19 +7,19 @@
 	"vendor": "SAP",
 	"eula": "",
 	"license": "",
-	"imports": ["planning-model","data-binding","datasource","table"],
+	"imports": ["planning-model","datasource","table"],
 	"webcomponents": [
 		{
 			"kind": "main",
 			"tag": "com-sap-sample-editproperties",
-			"url": "http://127.0.0.1:5500/editableTable/editProperties.js",
+			"url": "https://cdn.jsdelivr.net/gh/sbjohnson55/custom_widgets/editableTable/editProperties.js",
 			"integrity": "",
 			"ignoreIntegrity": true
 		},
 		{
 			"kind": "builder",
 			"tag": "com-sap-sample-edit-properties-builder",
-			"url": "http://127.0.0.1:5500/editableTable/editProperties_builder.js",
+			"url": "https://cdn.jsdelivr.net/gh/sbjohnson55/custom_widgets/editableTable/editProperties_builder.js",
 			"integrity": "",
 			"ignoreIntegrity": true
 		  }
@@ -65,6 +65,9 @@
 		"getData": {
 			"returnType": "PlanningModelMember[]",
 			"description": "Retrieves updated Data"
+		},
+		"resetTable": {
+			"description": "Clears the Table object"
 		},
 
 		"setHeaderBackgroundColor": {
@@ -127,16 +130,5 @@
 		"onCommitChanges": {
 			"description": "Called when the user commits the changes."
 		}
-	},
-	"dataBindings": {
-		"myDataBinding": {
-		  "feeds": [
-			{
-			  "id": "dimensions",
-			  "description": "Dimensions",
-			  "type": "dimension"
-			}
-		  ]
-		}
-	  }
+	}
 }
