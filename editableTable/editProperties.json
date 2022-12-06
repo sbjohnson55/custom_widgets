@@ -12,7 +12,7 @@
 		{
 			"kind": "main",
 			"tag": "com-sap-sample-editproperties",
-			"url": "https://cdn.jsdelivr.net/gh/sbjohnson55/custom_widgets/editableTable/editProperties.js",
+			"url": "http://127.0.0.1:5500/editableTable/editProperties.js",
 			"integrity": "",
 			"ignoreIntegrity": true
 		},
@@ -24,6 +24,37 @@
 			"ignoreIntegrity": true
 		  }
 	],
+	"types":{
+		"SelectedCell":{
+			"description":"Holds the details of the selected cell",
+			"properties":[
+			  {
+				"name":"propertyID",
+				"description":"ID of the selected Property",
+				"type":"string",
+				"mandatory":true
+			  },
+			  {
+				"name":"memberID",
+				"description":"ID of the selected Dimension Member",
+				"type":"string",
+				"mandatory":true
+			  },
+			  {
+				"name":"cellID",
+				"description":"ID of the selected Cell (for use when updating cell)",
+				"type":"string",
+				"mandatory":false
+			  },
+			  {
+				"name":"value",
+				"description":"Current Value of the selected cell",
+				"type":"string",
+				"mandatory":false
+			  }
+			]
+		}
+	},
 	"properties": {
 		"fontSize": {
 			"type": "number",
@@ -66,10 +97,23 @@
 			"returnType": "PlanningModelMember[]",
 			"description": "Retrieves updated Data"
 		},
+		"getSelectedValue":{
+			"returnType": "SelectedCell",
+			"description": "Retrieves the SelectedCell object"
+		},
 		"resetTable": {
 			"description": "Clears the Table object"
 		},
-
+		"getNewMember":{
+			"returnType": "PlanningModelMember",
+			"description": "Returns New Member",
+			"parameters": [
+				{
+				  "name": "member",
+				  "type": "any",
+				  "description": "PlanningMemberInfo for Dimensions"
+			  } ]
+		},
 		"setHeaderBackgroundColor": {
 			"description": "Sets the background color for the table header.",
 			"parameters": [
@@ -124,11 +168,26 @@
 				}
 			],
 			"body": "this.oddRowBackgroundColor = newColor;"
+		},
+		"resetWidth":{
+			"description": "Resets the width of the table to include the scrollbar"
+		},
+		"updateCell":{
+			"description": "Updates a table cell with the new value",
+			"parameters": [
+				  {
+					"name": "cellData",
+					"type": "SelectedCell",
+					"description": "SelectedCell object"
+				} ]
 		}
 	},
 	"events": {
 		"onCommitChanges": {
 			"description": "Called when the user commits the changes."
+		},
+		"onClick": {
+			"description": "Called when the user clicks into a cell."
 		}
 	}
 }

@@ -14,23 +14,25 @@
        }  
 
   #table_div {
-        width: 200px;
-        height: 65px;
-        overflow: auto;
+        width: 100%;
+        height: 100%;
+        overflow-x: auto;
+        overflow-y: auto;
    }
    table {   
        border-collapse: collapse;   
-       margin:50px auto;  
+       margin:5px auto;  
        }  
     td, th {   
        padding: 10px;   
        border: 1px solid #ccc;   
        text-align: left;   
-       font-size: 18px;  
+       font-size: 18px; 
+       white-space:nowrap; 
        }  
 
    </style>    
-     <div id="table_div" class="table-editable"  hidden>  
+     <div id="table_div" class="table-editable">  
        <table id="table" class="table">  
   
        </table>  
@@ -49,6 +51,7 @@
             this._cells = this.shadowRoot.querySelectorAll('td');
             this._header = this.shadowRoot.querySelectorAll('th');
             this._edit = false;
+            this._selectedCell = {};
 
             //this.populateTable();
             
@@ -104,12 +107,7 @@
     
         }
         onCustomWidgetAfterUpdate(changedProperties) {
-          this._table_div.style.display = "table";
-          /*
-          this._table_div.style.width="100px";
-          this._table_div.style.height="100px";
-          this._table_div.style.overflow="auto";
-          */
+          
         }
         generateHeaders(props){
           let tr = document.createElement('tr');
@@ -165,10 +163,26 @@
           
           
         }
+        getSelectedValue(){
+          return this._selectedCell;
+        }
+        getNewMember(member){
+          var newMember = {
+            "id":member.id,
+            "description":member.description,
+            "hierarchies":member.hierarchies,
+            "properties":member.properties
+
+          };
+          newMember.hierarchies['Investment_Category'].previousSiblingId = '';
+          newMember.hierarchies['Investment_Category'].parentId = 'Production Preparing';
+          return newMember;
+        }
         resetTable(){
           this._table.innerHTML = "";
         }
         loadDimensions(data){
+          console.log(Date.now);
           for(var i=0;i<data.length;i++){
             var props = data[i].properties;
             if(i==0){
@@ -187,26 +201,62 @@
                 let newTD = document.createElement('td');
                 newTD.className=prop;
                 newTD.innerHTML= props[prop];
+                newTD.id = prop+tr.className;
                 newTD.setAttribute("contenteditable","true");
                 newTD.setAttribute("parentTask",tr.className);
                 tr.appendChild(newTD);
             }
             this._table.appendChild(tr);
-            this.connectedCallback();
           }
-            
+          this.connectedCallback();
+          this.resetWidth();
+        }
 
+        updateCell(cellData){
+           // var cellID = '#'+cellData.cellID;
+            var cell = this.shadowRoot.getElementById(cellData.cellID);
+            cell.innerHTML=cellData.value;
+            this._edit=true;
+            cell.style.backgroundColor="yellow";
+            //var row = this.shadowRoot.querySelector('#ZPE-000116-04-14');
+            //row.focus();
         }
 
         onChange(e,cell){
+            console.log("You changed data!");
             this._edit=true;
+            cell.style.backgroundColor="yellow";
         }
-        
+        onSelect(e,cell){
+            console.log(cell);
+            this._selectedCell = {
+              propertyID: cell.className,
+              memberID: cell.attributes.parenttask.value,
+              cellID: cell.id,
+              value: cell.innerHTML
+            };
+            console.log(this._selectedCell);
+            this.dispatch("onClick",cell);
+        }
         onBlur(e,cell){
             if(this._edit){
                 this._edit=false;
             }
             
+        }
+        resetWidth(){
+          var tableWidth = this._table.offsetWidth;
+          var containerWidth = globalThis.innerWidth;
+
+          var newWidth = "";
+          if(tableWidth>containerWidth){
+            newWidth = "100%";
+          }else{
+            newWidth = (tableWidth+25)+"px";
+          }
+
+          //update div width to the width of table contents so that the scroll bar appears beside the table
+          this._table_div.style.width= newWidth;
         }
 
         addEventListenerAll(target, listener, ...otherArguments) {
@@ -231,15 +281,19 @@
             this._cells = this.shadowRoot.querySelectorAll('td');
             console.log(this._cells);
             this._cells.forEach(cell => {
+              
                 cell.addEventListener('input',(e)=>this.onChange(e,cell));
                 cell.addEventListener('blur',(e)=>this.onBlur(e,cell));
-                /*
+                cell.addEventListener('selectstart',(e)=>this.onSelect(e,cell));
+              
+             /*
                 this.addEventListenerAll(
                     cell,
                     (evt) => { console.log(evt); },
                     true
                   );
                   */
+                  
             });
         
         }
