@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        input[type="color"] {
+            height: 25px;
+            width: 25px;
+            padding: 0;
+            border: none;
+            outline: none;
+        }
+
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+            border: none;
+        }
+
+        input[type="color"]::-moz-color-swatch {
+            padding: 0;
+            border: none;
+        }
+        .btn-unstyled {
+            color: black;
+            text-decoration: none;
+        }
+
+.btn-unstyled:hover {
+  color: black;
+  text-decoration: none;
+}
+
+.btn-unstyled:focus {
+  outline: none;
+}
+
+.btn-unstyled:active {
+  color: black;
+}
+.format-option {
+  width: 40px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: RGB(247,247,247);
+  color: RGB(52,97,135);
+  border: 1px solid rgb(52,97,135);
+}
+.col-3,.col-4 {
+  width: 40px;
+  height: 25px;
+  margin-right: 5px;
+  padding: 0;
+  flex: 0!important;
+}
+select.form-control {
+  height: 30px;
+  font-size: 14px;
+  line-height: 30px;
+  padding-top: 3px; 
+  padding-bottom: 7px;
+}
+.card-body {
+  margin: 0;
+  padding: 0.5rem!important;
+}
+    </style>
+    <title>Collapsible Form Example</title>
+
+
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<body>
+    <div class="container">
+        <h2>Collapsible Form Example</h2>
+        <p>Click on the button to open the form:</p>
+        <a href="#fontCollapse" class="btn-unstyled" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="fontCollapse" id="fontLink">
+            Font <i class="bi bi-arrow-right-short ml-1" id="fontLinkIcon"></i>
+          </a>
+          
+        <div id="fontForm" class="collapse">
+            <div class="accordion" id="fontAccordion">
+                <div class="card">
+                    <div id="fontCollapse" class="collapse show" aria-labelledby="fontHeader"
+                        data-parent="#fontAccordion">
+                        <div class="card-body">
+                            <div class="form-row align-items-center">
+                                <div class="col">
+                                    <label class="text-muted" for="fontSelect">Font</label>
+                                    <select class="form-control" id="fontSelect">
+                                        <option>72-Web</option>
+                                        <option>Arial</option>
+                                        <option>Courier</option>
+                                        <option>Georgia</option>
+                                        <option>Lato</option>
+                                        <option>Times New Roman</option>
+                                        <option>Trebuchet MS</option>
+                                        <option>Verdana</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label class="text-muted" for="sizeSelect">Size</label>
+                                    <select class="form-control" id="sizeSelect">
+                                        <option>10</option>
+                                        <option>12</option>
+                                        <option>14</option>
+                                        <option>16</option>
+                                        <option>18</option>
+                                        <option>20</option>
+                                        <option>22</option>
+                                        <option>24</option>
+                                        <option>32</option>
+                                        <option>34</option>
+                                        <option>48</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label class="text-muted" for="colorSelect">Color</label>
+                                    <div class="input-group">&nbsp;&nbsp;
+                                        <input type="color" id="colorSelect" style="background-color: black;">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="card-body">
+                            <div id="formatForm" class="collapse show">
+                                <div class="form-row">
+                                    <label class="text-muted" for="fontSelect">Styling</label>
+                                </div>
+                                <div class="form-row">
+                                  <div class="col-3">
+                                    <div id="boldOption" class="format-option">
+                                      <i class="bi bi-type-bold"></i>
+                                    </div>
+                                  </div>
+                                  <div class="col-3">
+                                    <div id="italicOption" class="format-option">
+                                      <i class="bi bi-type-italic"></i>
+                                    </div>
+                                  </div>
+                                  <div class="col-3">
+                                    <div id="underlineOption" class="format-option">
+                                      <i class="bi bi-type-underline"></i>
+                                    </div>
+                                  </div>
+                                  <div class="col-3">
+                                    <div id="strikethroughOption" class="format-option">
+                                      <i class="bi bi-type-strikethrough"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="card-body">
+                            <div id="alignmentForm" class="collapse show">
+                                <div class="form-row">
+                                <label class="text-muted" for="alignmentSelect">Alignment</label>
+                                </div>
+                                <div class="form-row">
+                                <div class="col-4">
+                                    <div id="leftAlignOption" class="format-option">
+                                    <i class="bi bi-text-left"></i>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div id="centerAlignOption" class="format-option">
+                                    <i class="bi bi-text-center"></i>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div id="rightAlignOption" class="format-option">
+                                    <i class="bi bi-text-right"></i>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="form-row mt-3">
+                                <div class="col-4">
+                                    <div id="topAlignOption" class="format-option">
+                                    <i class="bi bi-align-top"></i>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div id="middleAlignOption" class="format-option">
+                                    <i class="bi bi-align-middle"></i>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div id="bottomAlignOption" class="format-option">
+                                    <i class="bi bi-align-bottom"></i>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                          
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        
+    </div>
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Select Items
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Default checkbox
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+          <label class="form-check-label" for="flexCheckChecked">
+            Checked checkbox
+          </label>
+        </div>
+      </div>
+    </div>
+                              
+
+<!-- Add Font collapse toggle event listeners -->
+<script>
+var fontLink = document.querySelector("#fontLink");
+var fontForm = document.querySelector("#fontForm");
+var fontIcon = fontLink.querySelector("i");
+
+fontLink.addEventListener("click", function (event) {
+  event.preventDefault();
+  if (fontForm.classList.contains("show")) {
+    fontForm.classList.remove("show");
+    fontIcon.classList.remove("bi-chevron-down");
+    fontIcon.classList.add("bi-chevron-right");
+  } else {
+    fontForm.classList.add("show");
+    fontIcon.classList.remove("bi-chevron-right");
+    fontIcon.classList.add("bi-chevron-down");
+  }
+});
+
+const formatOptions =  document.querySelectorAll(".format-option");
+
+formatOptions.forEach((option) => {
+  option.addEventListener("click", (event) => {
+    if (option.classList.contains("selected")) {
+      option.classList.remove("selected");
+      option.style.backgroundColor = "rgb(247, 247, 247)";
+      option.style.color = "rgb(52,97,135)";
+    } else {
+      option.classList.add("selected");
+      option.style.backgroundColor = "rgb(52,97,135)";
+      option.style.color = "white";
+    }
+  });
+});
+
+const checkboxes = document.querySelectorAll('.dropdown-menu input[type="checkbox"]');
+checkboxes.forEach((checkbox) => {
+  checkbox.addEventListener('change', handleDropdownSelection);
+});
+
+const dropdownMenu = document.querySelector('.dropdown-menu');
+const dropdownButton = document.querySelector('.dropdown-toggle');
+
+dropdownButton.addEventListener('click', () => {
+  dropdownMenu.classList.toggle('show');
+});
+
+window.addEventListener('click', (event) => {
+  if (!event.target.matches('.dropdown-toggle') && !event.target.closest('.dropdown-menu')) {
+    dropdownMenu.classList.remove('show');
+  }
+});
+
+
+function handleDropdownSelection() {
+  const checkboxes = document.querySelectorAll('.dropdown-menu input[type="checkbox"]');
+  const checkedItems = [];
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      checkedItems.push(checkbox.parentElement.innerText.trim());
+    }
+  });
+  console.log(checkedItems); // Do something with the selected items
+}
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
+

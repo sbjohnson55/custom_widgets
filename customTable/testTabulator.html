@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabulator Example</title>
+    <link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+</head>
+<body>
+
+<div id="example-table"></div>
+
+<script>
+    var tabledata = [
+
+    ];
+    /*
+    var columnDef =[
+        {title: 'Date', field: 'Date'},
+        {title: 'Start of Period HC', field: '[Account].[parentId].&[SOP_HC]', hozAlign: 'right', editor: 'number'}
+    ];
+    
+    var testData = [
+        {Date: '20211 Q1', '[Account].[parentId].&[SOP_HC]': 95},
+        {Date: '20212 Q2', '[Account].[parentId].&[SOP_HC]': 66},
+        {Date: '20213 Q3', '[Account].[parentId].&[SOP_HC]': 50}
+];
+*/
+var columnDef =[
+        {title: 'Date', field: 'Date'},
+        {title: 'Start of Period HC', field: 'SOP_HC', hozAlign: 'right', editor: 'number'}
+    ];
+
+var testData = [
+        {Date: '20211 Q1', 'SOP_HC': 95, hierarchy:'[Account].[parentId].&[SOP_HC]'},
+        {Date: '20212 Q2', 'SOP_HC': 66,hierarchy:'[Account].[parentId].&[SOP_HC]'},
+        {Date: '20213 Q3', 'SOP_HC': 50,hierarchy:'[Account].[parentId].&[SOP_HC]'}
+];
+
+var testData = [
+        {Date: '20211 Q1', 'SOP_HC': 95},
+        {Date: '20212 Q2', 'SOP_HC': 66},
+        {Date: '20213 Q3', 'SOP_HC': 50}
+];
+/*
+    for (var i=0;i<testData.length;i++){
+        let rowDef = {};
+        let currRow = testData[i];
+        let dateField = columnDef[0].field;
+        let sopField = "'" +columnDef[1].field+"'";
+        rowDef[dateField]=currRow[dateField];
+        rowDef[columnDef[1].field]=currRow[columnDef[1].field];
+        tabledata.push(rowDef); 
+    }
+*/
+
+    var table = new Tabulator("#example-table", {
+        data: testData,
+        columns: columnDef
+    });
+</script>
+
+</body>
+</html>

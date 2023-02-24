@@ -1,0 +1,91 @@
+{
+    "id": "com.sap.sample.tabulator",
+    "version": "1.0.0",
+    "name": "Simple Tabulator Demo",
+    "description": "A simple custom widget for testing purposes",
+    "newInstancePrefix": "Tabulator",
+    "imports": ["data-binding","datasource","table","planning","standard"],
+    "webcomponents": [
+        {
+            "kind": "main",
+            "tag": "com-sap-sample-tabulator",
+            "url": "http://127.0.0.1:5500/customTable/tabulator.js",
+            "integrity": "",
+            "ignoreIntegrity": true
+        },
+        {
+          "kind": "styling",
+          "tag": "com-sap-sample-tabulator-styling",
+          "url": "http://127.0.0.1:5500/customTable/tabulator_styling.js",
+          "integrity": "",
+          "ignoreIntegrity": true
+      },
+      {
+        "kind": "builder",
+        "tag": "com-sap-sample-tabulator-builder",
+        "url": "http://127.0.0.1:5500/customTable/tabulator_builder.js",
+        "integrity": "",
+        "ignoreIntegrity": true
+    }
+    ],
+    "properties": {
+        "enablePagination": {
+            "type": "boolean",
+            "description": "Determines whether pagination is enabled"
+        },
+        "paginationInterval": {
+            "type": "integer",
+            "description": "The number of rows per page when pagination is enabled"
+        },
+        "enableExport": {
+            "type": "boolean",
+            "description": "Determines whether export functionality is enabled"
+        },
+        "title": {
+            "type": "string",
+            "description": "The title of the table"
+        },
+        "backgroundColor": {
+            "type": "string",
+            "description": "The background color of the table"
+        },
+        "titleColor": {
+            "type": "string",
+            "description": "The color of the table title"
+        },
+        "titleSize": {
+            "type": "number",
+            "description": "The font size of the table title"
+        }
+    },
+    "methods": {
+        "setTable":{
+            "description": "Pass in Table object to save data to",
+            "parameters": [
+              {
+                "name": "table",
+                "type": "Table",
+                "description": "Table object"
+            } ]
+        }
+            
+    },
+    "events": {},
+    "dataBindings": {
+        "myDataBinding": {
+            "feeds": [
+                {
+                    "id": "dimensions",
+                    "description": "Dimensions",
+                    "type": "dimension"
+                },
+                {
+                    "id": "measures",
+                    "description": "Measures",
+                    "type": "mainStructureMember"
+                }
+            ]
+        }
+    }
+  }
+  

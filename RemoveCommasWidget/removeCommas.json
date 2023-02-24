@@ -1,0 +1,41 @@
+{
+	"name": "Remove Commas",
+	"description": "Removes Commas from Table Output",
+	"eula": "",
+	"vendor": "SAP",
+	"license": "",
+	"id": "com.sap.sample.remove.commas",
+	"newInstancePrefix": "RemoveCommas",
+	"version": "1.0.0",
+	"imports": ["data-binding","datasource","table","planning","standard"],
+    "webcomponents": [
+        {
+            "kind": "main",
+            "tag": "com-sap-sample-basic-widget",
+            "url": "http://127.0.0.1:5500/basicCustomWidget/removeCommas.js",
+            "integrity": "",
+            "ignoreIntegrity": true
+        }
+    ],
+	"properties": {
+	},
+	"methods": {
+		"removeAllCommas":{
+            "description": "Removes All Commas",
+			"parameters": [
+				{"name": "tables", "type":"Table[]","description":"Array of Tables to apply removal logic to."}
+			  ]
+        },
+		"removeSelectedCommas":{
+            "description": "Removes Commas from Selected Columns",
+			"parameters": [
+				{"name": "colHeaders", "type": "string[]", "description":"Array of Strings representing Column Labels"},
+				{"name": "tables", "type":"Table[]","description":"Array of Tables to apply removal logic to."}
+			  ]
+        }
+
+	},
+	"events": {
+		
+	}
+}

@@ -1,0 +1,70 @@
+{
+    "id": "com.sap.sample.customtable",
+    "version": "1.0.0",
+    "name": "Custom Table Widget",
+    "description": "A custom widget that displays an editable HTML table",
+    "newInstancePrefix": "CustomTable",
+    "icon": "",
+    "vendor": "SAP",
+    "eula": "",
+    "license": "",
+    "imports": ["data-binding","datasource"],
+    "webcomponents": [
+        {
+            "kind": "main",
+            "tag": "custom-table-widget",
+            "url": "http://127.0.0.1:5500/customTable/customtablewidget.js",
+            "integrity": "",
+            "ignoreIntegrity": true
+        },
+        {
+			"kind": "builder",
+			"tag": "custom-table-widget-builder",
+			"url": "http://127.0.0.1:5500/customTable/customtablewidget_builder.js",
+			"integrity": "",
+			"ignoreIntegrity": true
+		}
+    ],
+    "properties": {
+        "title": {
+            "type": "string",
+            "description": "The title of the widget",
+            "default": "Custom Table Widget"
+        }
+    },
+    "methods": {
+        "updateData": {
+            "description": "Updates the data displayed in the HTML table",
+            "parameters": [
+                {
+                    "name": "newData",
+                    "type": "any",
+                    "description": "The new data to be displayed"
+                }
+            ]
+        }
+    },
+    "events": {
+        "onDataChange": {
+            "description": "Fires when the data displayed in the HTML table changes"
+        }
+      },
+    "dataBindings": {
+        "myDataBinding": {
+          "feeds": [
+            {
+              "id": "dimensions",
+              "description": "Dimensions",
+              "type": "dimension"
+            },
+            {
+              "id": "measures",
+              "description": "Measures",
+              "type": "mainStructureMember"
+            }
+          ]
+        }
+      }
+      
+    
+}

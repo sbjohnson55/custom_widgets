@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom AG Table Widget</title>
+    <style>
+        com-sap-sample-ag-table {
+            height: 400px;
+
+        }
+    </style>
+</head>
+<body>
+    <com-sap-sample-ag-table></com-sap-sample-ag-table>
+
+    <script>
+        var getScriptPromisify = (src) => {
+    return new Promise(resolve => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = resolve;
+      document.head.appendChild(script);
+    });
+  }
+  
+  (function() { 
+    let template = document.createElement("template");
+    template.innerHTML = `
+    <style>
+        :host {
+  display: block;
+  height: 500px;
+  width: 800px;
+
+}
+
+#myGrid {
+  height: 500px;
+  width: 800px;
+}
+
+
+
+</style>
+<div id="myGrid" class="ag-theme-alpine"></div>
+    `;
+  
+    class CustomAGTable extends HTMLElement {
+      constructor() {
+        super(); 
+        this._shadowRoot = this.attachShadow({ mode: 'open' });
+        this._shadowRoot.appendChild(template.content.cloneNode(true));
+
+       this._setStyle('https://cdn.jsdelivr.net/npm/ag-grid-community/dist/styles/ag-grid.min.css');
+       this._setStyle('https://cdn.jsdelivr.net/npm/ag-grid-community/dist/styles/ag-theme-alpine.min.css');
+       this._myGrid = this._shadowRoot.getElementById('myGrid');
+
+       const columnDefs = [
+       {field: 'BudgetType', colId: 'BudgetType', filter: true, wrapHeaderText: true, sortable: true},
+       {field: 'CostCenter', colId: 'CostCenter', filter: true, wrapHeaderText: true, sortable: true},
+       {field: 'BudgetReason', colId: 'BudgetReason', filter: true, wrapHeaderText: true, sortable: true},
+       {field: 'Total Payout', colId: 'TOTAL', filter: true, wrapHeaderText: true, sortable: true, editable: true}
+      ];
+
+      const rowData = [
+
+        {
+            "BudgetType": "Non-Recurring",
+            "CostCenter": "Information Technology",
+            "BudgetReason": "Chargeout to Capital",
+            "Total Payout": "100,187.50"
+        },
+        {
+            "BudgetType": "Non-Recurring",
+            "CostCenter": "Information Technology",
+            "BudgetReason": "Other Explanation Required",
+            "Total Payout": "120,050.00"
+        },
+        {
+            "BudgetType": "Non-Recurring",
+            "CostCenter": "Information Technology",
+            "BudgetReason": "Position filled by other employee",
+            "Total Payout": "67,725.00"
+        },
+        {
+            "BudgetType": "Operating Budget - Base",
+            "CostCenter": "Information Technology",
+            "BudgetReason": "Not assigned",
+            "Total Payout": "2,770,967.50"
+        },
+        {
+            "BudgetType": "Recurring Discretionary",
+            "CostCenter": "Information Technology",
+            "BudgetReason": "Chargeout to Capital",
+            "Total Payout": "152,554.50"
+        },
+        {
+            "BudgetType": "Recurring Discretionary",
+            "CostCenter": "Information Technology",
+            "BudgetReason": "Collective Agreemnt3",
+            "Total Payout": "1,232,350.00"
+        },
+        {
+            "BudgetType": "Recurring Discretionary",
+            "CostCenter": "Information Technology",
+            "BudgetReason": "New position or job",
+            "Total Payout": "497,087.50"
+        },
+        {
+            "BudgetType": "Recurring Discretionary",
+            "CostCenter": "Information Technology",
+            "BudgetReason": "Other Explanation Required",
+            "Total Payout": "32,508.00"
+        },
+        {
+            "BudgetType": "Recurring Discretionary",
+            "CostCenter": "Information Technology",
+            "BudgetReason": "Position Reclassification",
+            "Total Payout": "677,250.00"
+        },
+        {
+            "BudgetType": "Recurring Discretionary",
+            "CostCenter": "Information Technology",
+            "BudgetReason": "Position filled by other employee",
+            "Total Payout": "338,625.00"
+        },
+        {
+            "BudgetType": "Recurring Discretionary",
+            "CostCenter": "Information Technology",
+            "BudgetReason": "Premium or Allowance",
+            "Total Payout": "52,896.00"
+        },
+        {
+            "BudgetType": "Recurring Discretionary",
+            "CostCenter": "Information Technology",
+            "BudgetReason": "Reallocate budget between Cost Elements",
+            "Total Payout": "67,725.00"
+        },
+        {
+            "BudgetType": "Recurring Non-Discretionary",
+            "CostCenter": "Information Technology",
+            "BudgetReason": "Pay Group or Level/Increment",
+            "Total Payout": "582,138.00"
+        },
+        {
+            "BudgetType": "Recurring Non-Discretionary",
+            "CostCenter": "Information Technology",
+            "BudgetReason": "Position Reclassification",
+            "Total Payout": "77,400.00"
+        },
+        {
+            "BudgetType": "Recurring Non-Discretionary",
+            "CostCenter": "Information Technology",
+            "BudgetReason": "Position filled by other employee",
+            "Total Payout": "605,461.50"
+        },
+        {
+            "BudgetType": "Recurring Non-Discretionary",
+            "CostCenter": "Information Technology",
+            "BudgetReason": "Reorganization between Cost Centers",
+            "Total Payout": "67,725.00"
+        }
+
+      ];
+  
+
+      this.gridOptions = {
+        alwaysShowHorizontalScroll: true,
+        alwaysShowVerticalScroll: true,
+        pagination: true,
+        columnDefs: columnDefs,
+        rowData: rowData
+       };
+       getScriptPromisify('https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js').then(() => {
+        new agGrid.Grid(this._myGrid, this.gridOptions);
+      });
+     
+      }
+      
+      _setStyle(src){
+        const link = document.createElement('link');
+        link.setAttribute('rel', 'stylesheet');
+        link.setAttribute('type', 'text/css');
+        link.setAttribute('href', src);
+        this.shadowRoot.appendChild(link);
+      }
+    }
+  
+    customElements.define("com-sap-sample-ag-table", CustomAGTable);
+  })();
+  
+
+    </script>
+</body>
+</html>

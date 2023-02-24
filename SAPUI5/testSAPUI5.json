@@ -1,0 +1,38 @@
+{
+    "eula": "",
+    "vendor": "SAP",
+    "license": "",
+    "id": "com.sap.sample.google.table",
+    "version": "1.0.0",
+    "name": "Google Table",
+    "newInstancePrefix": "GoogleTable",
+    "description": "Sample of Google Table",
+    "imports": ["table","datasource"],
+    "webcomponents": [
+      {
+        "kind": "main",
+        "tag": "com-sap-sample-google-table",
+        "url": "http://127.0.0.1:5500/customTable/customTable.js",
+        "integrity": "",
+        "ignoreIntegrity": true
+      }
+    ],
+    "properties": {  
+    },
+    "methods": {
+      "downloadCSV": {
+        "parameters": [
+          {"name": "table", "type": "Table"},
+          {"name": "fileName", "type": "string"}
+        ]
+      },
+      "downloadFile": {
+        "parameters": [
+          {"name": "url", "type": "string"},
+          {"name": "fileName", "type": "string"}
+        ]
+      }     
+    },
+    "events": {
+    }
+  }

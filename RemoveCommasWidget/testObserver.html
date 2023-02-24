@@ -1,0 +1,40 @@
+<html>
+    <script>
+        function setObserver(){
+                // select the target node
+            var target = document.querySelector('span.cellValue.showEllipsis');
+            
+            // create an observer instance
+            var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                console.info("EVENT TRIGGERT " + mutation.target.id);
+            });    
+            });
+            
+            // configuration of the observer:
+            var config = { attributes: true, childList: true, characterData: true };
+            
+            // pass in the target node, as well as the observer options
+            observer.observe(target, config);
+        }
+    
+        
+        // simulate the Change of the text value of span
+        function removeCommas() {
+          const spans = document.querySelectorAll('span.cellValue.showEllipsis');
+          for (const span of spans) {
+            span.textContent = span.textContent.replace(/,/g, '');
+          }
+        }
+        
+    
+       
+         </script>
+  <body onload="setObserver()"">
+    <div>
+        <button onclick="removeCommas()">Remove Commas</button>
+      </div>
+    <span class="cellValue showEllipsis">200,000.00</span>
+  </body>
+ 
+</html>
