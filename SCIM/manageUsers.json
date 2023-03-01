@@ -1,0 +1,31 @@
+{
+	"name": "Manage Users",
+	"description": "SCIM Sample",
+	"eula": "",
+	"vendor": "SAP",
+	"license": "",
+	"id": "com.sap.sample.manage.users",
+	"newInstancePrefix": "ManageUsers",
+	"version": "1.0.0",
+	"imports": ["data-binding","datasource","table","planning","standard"],
+    "webcomponents": [
+        {
+            "kind": "main",
+            "tag": "com-sap-sample-manage-users",
+            "url": "https://cdn.jsdelivr.net/gh/sbjohnson55/custom_widgets/SCIM/manageUsers.min.js",
+            "integrity": "",
+            "ignoreIntegrity": true
+        }
+    ],
+	"properties": {
+	},
+	"methods": {
+		"getAllUsers":{
+            "description": ""
+        }
+
+	},
+	"events": {
+		
+	}
+}
