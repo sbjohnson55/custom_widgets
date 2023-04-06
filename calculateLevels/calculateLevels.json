@@ -1,0 +1,55 @@
+{
+	"name": "Calculate Levels",
+	"description": "Used to store parent amounts at children levels",
+	"eula": "",
+	"vendor": "SAP",
+	"license": "",
+	"id": "com.sap.sample.calculate.levels",
+	"newInstancePrefix": "calculateLevels",
+	"version": "1.0.0",
+	"imports": ["data-binding","datasource","table","planning","standard"],
+    "webcomponents": [
+        {
+            "kind": "main",
+            "tag": "com-sap-sample-calculate-levels",
+            "url": "http://127.0.0.1:5500/calculateLevels/calculateLevels.js",
+            "integrity": "",
+            "ignoreIntegrity": true
+        }
+    ],
+	"properties": {
+	},
+	"methods": {
+		"getAggregateData": {
+			"returnType": "Selection[]",
+			"description": "Returns the Data string.",
+			"parameters": [
+			  {
+				"name": "modelID",
+				"type": "string",
+				"description": "ID of Model"
+			  },
+			  {
+				"name": "aggregateDim",
+				"type": "string",
+				"description": "ID of Dimension to Aggregate"
+			  },
+			  {
+				"name": "contextDims",
+				"type": "string[]",
+				"description": "IDs of Dimensions to use for Context"
+			  },
+			  {
+				"name": "numberOfLevels",
+				"type": "integer",
+				"description": "Number of Levels to Aggregate"
+			  }
+
+			]
+		  } 
+
+	},
+	"events": {
+		
+	}
+}
