@@ -32,6 +32,7 @@ var getScriptPromisify = (src) => {
             this._numberOfLevels = 0;
             this._aggregateDIM = "";
             this._contextDIMs = [];
+            this._hierarchyMap = new Map();
                      
         }
 
@@ -52,26 +53,34 @@ var getScriptPromisify = (src) => {
           
         }
       
-        getFactData() {
-          const url = this._baseURL+'/api/v1/dataexport/providers/sac/'+this._modelId +'/FactData';
+        getFactData(filters) {
+          // Construct the filter query string
+          const filterQueries = filters.map(filter => {
+            const filterMembers = filter.members.map(member => `${filter.id} eq '${member}'`).join(' or ');
+            return `(${filterMembers})`;
+          }).join(' and ');
+        
+          const url = this._baseURL + "/api/v1/dataexport/providers/sac/" + this._modelId + "/FactData?$filter=" + encodeURIComponent(filterQueries);
         
           return fetch(url, {
             method: 'GET',
             headers: {
               'Authorization': 'Bearer ' + this._token,
-              'x-sap-sac-custom-auth':true
+              'x-sap-sac-custom-auth': true
             },
           })
             .then(response => response.json())
             .then(data => {
+              console.log('Fact Data:');
               console.log(data);
-              this._factData = data.value;
+              return data.value;
             });
         }
-
-        getMasterData() {
-          const url = this._baseURL+'/api/v1/dataexport/providers/sac/'+this._modelId +'/REGIONMaster';
         
+
+        getMasterData(aggregateDim) {
+          const serviceName = aggregateDim + 'Master';
+          const url = this._baseURL+'/api/v1/dataexport/providers/sac/'+this._modelId +'/'+serviceName;
           return fetch(url, {
             method: 'GET',
             headers: {
@@ -81,8 +90,9 @@ var getScriptPromisify = (src) => {
           })
             .then(response => response.json())
             .then(data => {
+              console.log('Master Data:');
               console.log(data);
-              this._levelData = data.value;
+              return data.value;
             });
         }
 
@@ -102,6 +112,18 @@ var getScriptPromisify = (src) => {
               return data.value;
             });
         }
+        async getAggregateDataByParentChild(modelID,aggregateDim,measure,reverseSignage,filters,contextDims){
+          this._modelId = modelID;
+          await this.getAccessToken();
+          const masterData = await this.getMasterData(aggregateDim);
+          const factData = await this.getFactData(filters);
+
+          const output = await this.parentFunction(masterData,factData,aggregateDim,measure,contextDims,reverseSignage);
+          return output;
+        }
+        useDeltaQuery(url,aggregateDim,measure,filters,contextDims){
+
+        }
         async getAggregateData(modelID,aggregateDIM,contextDims,numberOfLevels){
           this._modelId = modelID;
           this._aggregateDIM = aggregateDIM;
@@ -109,21 +131,6 @@ var getScriptPromisify = (src) => {
           this._numberOfLevels=numberOfLevels;
           this._aggregatedData = await this.aggregateDataCombined(this._numberOfLevels);
           return this._aggregatedData;
-        }
-        async testODATA(){
-          await this.getAccessToken();
-            console.log(this._token);
-
-            if(this._modelId !==''){
-                //await this.getFactData();
-                //await this.getMasterData();
-                await this.getCombinedData();
-                this._numberOfLevels = 3;
-                
-                //this._aggregatedData = await this.aggregateData(this._factData,this._levelData,this._numberOfLevels);
-                this._aggregatedData = await this.aggregateDataCombined(this._numberOfLevels);
-                console.log(this._aggregatedData);
-            }
         }
         async aggregateData(factData, masterData,numberOfLevels) {
           const result = [];
@@ -207,11 +214,109 @@ var getScriptPromisify = (src) => {
         
           return result;
         }
+
+        async processHierarchy(factData, masterData, contextMap, hierarchyDimension, measureName, reverseSignage = true) {
+          const idToNode = {};
+          masterData.forEach(node => {
+            idToNode[node.ID] = node;
+            node.children = [];
+            node[measureName] = 0;
+          });
+        
+          masterData.forEach(node => {
+            if (node.Parent !== '<root>') {
+              idToNode[node.Parent].children.push(node);
+            }
+          });
+        
+          factData.forEach(fact => {
+            const node = idToNode[fact[hierarchyDimension]];
+            if (node) {
+              node[measureName] = fact[measureName];
+            }
+          });
+        
+          function aggregateAmount(node) {
+            if (node.children.length === 0) {
+              return node[measureName];
+            }
+            return node.children.reduce((sum, child) => sum + aggregateAmount(child), 0);
+          }
+        
+          function getAmountAtLevel(node, level) {
+            let current = node;
+            for (let i = 0; i < level; i++) {
+              current = idToNode[current.Parent];
+            }
+            return aggregateAmount(current);
+          }
+        
+          const output = factData.map(fact => {
+            const node = idToNode[fact[hierarchyDimension]];
+            const highestLevel = Math.max(...masterData.map(node => {
+              const level = Number(node.Level);
+              if (isNaN(level)) {
+                console.log('Unexpected value for node.Level:', node.Level);
+              }
+              return level;
+            }));
+            const result = { [hierarchyDimension]: node.ID };
+        
+            for (let i = 2; i <= highestLevel + 1; i++) {
+              const amount = getAmountAtLevel(node, i - 1);
+              result[`AMT_LVL${highestLevel - i + 2}`] = reverseSignage ? -1 * amount.toFixed(7) : amount;
+            }
+        
+            // Add the context values from the contextMap to the result object
+            contextMap.forEach((value, key) => {
+              result[key] = value;
+            });
+        
+            return result;
+          });
+        
+          return output;
+        }
         
         
-        connectedCallback(){
-          //this._modelId = 'Cpu9c210lqf6pul8b48oqifb957';
-          //this.testODATA();
+        async parentFunction(masterData,factData,hierarchyDimension, measureName,dataContext = [], reverseSignage = true) {
+
+          const dcSize = dataContext.length;
+          let finalOutput = [];
+        
+          const uniqueDataContextValues = dataContext.map(ctxField => {
+            return Array.from(new Set(factData.map(fact => fact[ctxField])));
+          });
+        
+          function generateCombinations(arr) {
+            return arr.reduce((acc, values) => {
+              const combinations = [];
+              acc.forEach(accValue => {
+                values.forEach(value => {
+                  combinations.push([...accValue, value]);
+                });
+              });
+              return combinations;
+            }, [[]]);
+          }
+        
+          const contextCombinations = generateCombinations(uniqueDataContextValues);
+        
+          for (const combination of contextCombinations) {
+            const contextMap = new Map(dataContext.map((field, i) => [field, combination[i]]));
+            const filteredFactData = factData.filter(fact => {
+              return Array.from(contextMap.entries()).every(([field, value]) => fact[field] === value);
+            });
+            const newOutput = await this.processHierarchy(filteredFactData, masterData, contextMap, hierarchyDimension, measureName,reverseSignage);
+            finalOutput = [...finalOutput, ...newOutput];
+          }
+        
+          return finalOutput;
+        }
+
+
+        async connectedCallback(){
+
         }
     }
 
