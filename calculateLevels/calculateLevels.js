@@ -112,6 +112,29 @@ var getScriptPromisify = (src) => {
               return data.value;
             });
         }
+        async getAccountValuesAsMeasures(modelID,aggregateDim,measure,reverseSignage,filters,context,useAdjNode=true){
+          this._modelId = modelID;
+          await this.getAccessToken();
+          const masterData = await this.getMasterData(aggregateDim);
+
+          if(useAdjNode){
+            const hierarchy = await this.buildHierarchy(masterData);
+            const rootNode = hierarchy['pd_pd_20000'];
+            const leafNodesWithAdjustedParent = await this.findLeafNodesWithAdjustedParent(rootNode);
+            let filter = {
+              "id": "BSCI_PRD",
+              "members": leafNodesWithAdjustedParent
+            };
+            filters.push(filter);
+          }
+          const factData = await this.getFactData(filters);
+          console.log(factData);
+
+         const output = this.mapAccountsToLevels(masterData, factData, aggregateDim,'Local', context, true);
+         console.log(output);
+         return output;
+          
+        }
         async getAggregateDataByParentChild(modelID,aggregateDim,measure,reverseSignage,filters,contextDims){
           this._modelId = modelID;
           await this.getAccessToken();
@@ -215,7 +238,7 @@ var getScriptPromisify = (src) => {
           return result;
         }
 
-        async processHierarchy(factData, masterData, contextMap, hierarchyDimension, measureName, reverseSignage = true) {
+        processHierarchy(factData, masterData, contextMap, hierarchyDimension, measureName, reverseSignage = true) {
           const idToNode = {};
           masterData.forEach(node => {
             idToNode[node.ID] = node;
@@ -307,15 +330,82 @@ var getScriptPromisify = (src) => {
             const filteredFactData = factData.filter(fact => {
               return Array.from(contextMap.entries()).every(([field, value]) => fact[field] === value);
             });
-            const newOutput = await this.processHierarchy(filteredFactData, masterData, contextMap, hierarchyDimension, measureName,reverseSignage);
+            const newOutput = this.processHierarchy(filteredFactData, masterData, contextMap, hierarchyDimension, measureName,reverseSignage);
             finalOutput = [...finalOutput, ...newOutput];
           }
         
           return finalOutput;
         }
+        mapAccountsToLevels(masterData, factData, hierarchyDimension, measureName, context, reverseSignage = true) {
+          let finalOutput = [];
+        
+          for (const binding of context.Bindings) {
+            const filteredFactData = factData.filter(fact => fact[context.AccountDim] === binding.AccountID);
+            const tempOutput = this.processHierarchy(filteredFactData, masterData, [], hierarchyDimension, measureName, reverseSignage);
+            const newOutput = this.filterMeasures(tempOutput, binding.Measure);
+            //finalOutput = [...finalOutput, ...newOutput.values];
+            finalOutput.push(newOutput);
+          }
+        
+          return finalOutput;
+        }
+        
 
+        async buildHierarchy(masterData) {
+          const idToNode = {};
+          masterData.forEach(node => {
+            idToNode[node.ID] = node;
+            node.children = [];
+          });
+        
+          masterData.forEach(node => {
+            if (node.Parent !== '<root>') {
+              idToNode[node.Parent].children.push(node);
+            }
+          });
+        
+          return idToNode;
+        }
+        
+        async findLeafNodesWithAdjustedParent(node) {
+          const leafNodes = [];
+        
+          function traverse(currentNode, hasAdjustedParent) {
+            if (currentNode.children.length === 0) {
+              if (hasAdjustedParent) {
+                leafNodes.push(currentNode.ID);
+              }
+              return;
+            }
+        
+            currentNode.children.forEach(child => {
+              traverse(child, hasAdjustedParent || currentNode.ADJ === 'Yes');
+            });
+          }
+        
+          traverse(node, false);
+          return leafNodes;
+        }
+
+        filterMeasures(data, measureName) {
+          const filteredValues = data.map(item => {
+            return {
+              "BSCI_PRD": item["BSCI_PRD"],
+              [measureName]: item[measureName]
+            };
+          });
+        
+          const result = {
+            measure: measureName,
+            values: filteredValues
+          };
+        
+          return result;
+        }
+        
 
         async connectedCallback(){
+               
 
         }
     }
