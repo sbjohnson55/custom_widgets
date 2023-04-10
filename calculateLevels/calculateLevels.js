@@ -130,15 +130,26 @@ var getScriptPromisify = (src) => {
           const factData = await this.getFactData(filters);
           console.log(factData);
 
-         const output = this.mapAccountsToLevels(masterData, factData, aggregateDim,'Local', context, true);
+         const output = this.mapAccountsToLevels(masterData, factData, aggregateDim,measure, context, reverseSignage);
          console.log(output);
          return output;
           
         }
-        async getAggregateDataByParentChild(modelID,aggregateDim,measure,reverseSignage,filters,contextDims){
+        async getAggregateDataByParentChild(modelID,aggregateDim,measure,reverseSignage,filters,contextDims,useAdjNode=true){
           this._modelId = modelID;
           await this.getAccessToken();
           const masterData = await this.getMasterData(aggregateDim);
+
+          if(useAdjNode){
+            const hierarchy = await this.buildHierarchy(masterData);
+            const rootNode = hierarchy['pd_pd_20000'];
+            const leafNodesWithAdjustedParent = await this.findLeafNodesWithAdjustedParent(rootNode);
+            let filter = {
+              "id": "BSCI_PRD",
+              "members": leafNodesWithAdjustedParent
+            };
+            filters.push(filter);
+          }
           const factData = await this.getFactData(filters);
 
           const output = await this.parentFunction(masterData,factData,aggregateDim,measure,contextDims,reverseSignage);
