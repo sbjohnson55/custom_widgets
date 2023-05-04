@@ -126,7 +126,7 @@ class BillOfMaterials {
 
  // calculate cost for raw components
 calculateRawComponentCost(components) {
-  let rawComponents = components.filter((c) => c.componentType === "raw");
+  let rawComponents = components.filter((c) => c.componentType === "raw" || c.componentType === "byp");
   for (let c of rawComponents) {
     console.log(c);
     let qty = parseFloat(c.qty.replace(/[^0-9.e-]+/g, ""));
