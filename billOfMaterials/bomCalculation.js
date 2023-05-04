@@ -114,7 +114,7 @@ class BillOfMaterials {
 
     for (let i = levels.length-1; i >= 1; i--) {
       let level = i; // fix: level should be set to the current level
-      const levelComponents = this.components.filter((c) => parseInt(c.level, 10) === level && c.componentType !== "raw");
+      const levelComponents = this.components.filter((c) => parseInt(c.level, 10) === level && (c.componentType !== "raw" || c.componentType !== "byp"));
       for (let c of levelComponents) {
         c.calculateCostAndPrice(this.components);
         let index = this.components.findIndex(component => component.component === c.component);
@@ -246,7 +246,7 @@ function useFilteredData(componentList) {
 
 
 function checkTotals(bom){
-  const rawComponents = bom.filter(item => item.componentType === 'raw');
+  const rawComponents = bom.filter(item => item.componentType === 'raw' || item.componentType === "byp");
   const level1Components = bom.filter(item => item.level === '1' || item.level === 1); // to handle both string and number types
   const totalCostRaw = rawComponents.reduce((total, item) => total + item.cost, 0);
   const totalCostLevel1 = level1Components.reduce((total, item) => total + item.cost, 0);
