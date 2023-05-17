@@ -1,0 +1,80 @@
+{
+	"name": "Export Dimensions",
+	"description": "Exports Master Data to XLS",
+	"eula": "",
+	"vendor": "SAP",
+	"license": "",
+	"id": "com.sap.sample.export.dimensions",
+	"newInstancePrefix": "ExportDimensions",
+	"version": "1.0.0",
+	"imports": ["data-binding","datasource","table","planning","standard"],
+    "webcomponents": [
+        {
+            "kind": "main",
+            "tag": "com-sap-sample-export-dimensions",
+            "url": "http://127.0.0.1:5500/exportDimensions/exportDimensions.js",
+            "integrity": "",
+            "ignoreIntegrity": true
+        }
+    ],
+	"properties": {
+	},
+	"types": {
+	},
+	"methods": {
+		
+		  "exportDimension":{
+			"returnType": "Selection[]",
+			"parameters": [
+				{
+				  "name": "modelID",
+				  "type": "string",
+				  "description": "ID of Model"
+				},
+				{
+				  "name": "dimension",
+				  "type": "string",
+				  "description": "ID of Dimension to Export"
+				},
+				{
+					"name": "hierarchy",
+					"type": "string",
+					"description": "Name of Hierarchy"
+				  },
+				  {
+					"name": "filterMembers",
+					"type": "MemberInfo[]",
+					"description": "Filtered members to include"
+				  },
+				  {
+					"name": "fileName",
+					"type": "string",
+					"description": "Name of XLS File"
+				  }  
+			  ]
+		  }
+
+
+	},
+	"events": {
+		"onFileDownload": {
+			"description": "Called when a file has been successfully downloaded."
+		  }
+	},
+	"dataBindings": {
+        "myDataBinding": {
+          "feeds": [
+            {
+              "id": "dimensions",
+              "description": "Dimensions",
+              "type": "dimension"
+            },
+            {
+              "id": "measures",
+              "description": "Measures",
+              "type": "mainStructureMember"
+            }
+          ]
+        }
+      }
+	}
